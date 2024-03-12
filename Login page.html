@@ -14,14 +14,15 @@
                 }
 
                 .form-container {
-                    margin: 20% auto;
+                    margin: 8% 20%;
                     text-align: center;
+                    padding: 100;
                 }
 
                 .loginForm {
                     width: 320px;
                     margin: 0 auto;
-                    padding: 10px;
+                    padding: 100px;
                     border: 1px solid #ccc;
                     background: #f3f3f3;
                     border-radius: 10px;
@@ -58,6 +59,7 @@
                 .loginButton {
                     width: 120px;
                     padding: 10px;
+                    margin: 1px 40%;
                     border: 1px solid #ccc;
                     border-radius: 5px;
                     background: #3fe258;
@@ -66,27 +68,72 @@
                     color: black;
                     font-weight: bold;
                 }
+
+                .Remembermecheckbox {
+                    width: 20;
+                    margin: 0;
+                    text-align: left;
+                    display: flex;
+                    background-color: #f3f3f3;
+                    border: 1px solid #f3f3f3;
+
+
+                }
+
+                .links {
+                    color: #3f65e2;
+                    margin: auto;
+                    text-align: center;
+
+                }
+
+                .createaccountbutton {
+                    width: 200px;
+                    background-color: #f3f3f3;
+                    border: 2px solid #3fe258;
+                    cursor: pointer;
+                    font-size: 20px;
+                    margin: 10px 50px;
+                    text-align: center;
+                    padding: 10px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    color: #3fe258;
+
+                }
             </style>
         </head>
 
         <body class="inner">
             <div class="form-container">
                 <form class="loginForm">
-                    <h1 align="center"><b>Log in</h1></b>
+                    <h1><b>Log in</h1></b>
                     <div class="formGroup">
-                        <label align="center" class="inputLabel">Username:</label>
-                        <input class="inputField" type="text" placeholder="Username">
+                        <label class="inputLabel">Email:</label>
+                        <input class="inputField" type="text" placeholder="Email">
                     </div>
                     <div class="formGroup">
-                        <label align="center" class="inputLabel">Password:</label>
+                        <label class="inputLabel">Password:</label>
                         <input class="inputField" type="password" placeholder="Password">
+                    </div>
+                    <div class="Remembermecheckbox">
+                        <input type="checkbox">Remember me
+
                     </div>
                     <div class="buttonGroup">
                         <button type="button" class="loginButton">Log in</button>
+                        <button type="button" class="createaccountbutton">Create account</button>
                     </div>
+
+                    <div class="links">
+                        <a href="emailcheckform.html">Forgot Password</a>
+                    </div>
+
                 </form>
             </div>
         </body>
     </body>
 
-    </html>
+        
+
+    </html>
