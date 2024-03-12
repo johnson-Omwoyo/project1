@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<body class="page">
+
+    <head>
+        <title>Email Check Page</title>
+        <style>
+            .page {
+                background-color: #ccc;
+            }
+
+            .emailform {
+                width: 320px;
+                margin: 8% auto 20% auto;
+                padding: 100px;
+                text-align: center;
+                background-color: #f3f3f3;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                vertical-align: middle;
+            }
+
+            .inputfield {
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+            }
+
+            .input {
+                margin: 3px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                padding: 10px;
+            }
+
+            .submitbutton {
+                width: 70px;
+                padding: 10px;
+                margin: auto;
+                background: #3fe258;
+                border-radius: 5px;
+                font-weight: bold;
+                border: 1px solid #ccc;
+                cursor: pointer;
+                animation: forwards;
+
+            }
+        </style>
+
+
+    </head>
+
+    <div class="emailform">
+        <div class="inputfield">
+            <div class="label"><label for="input">Email:</label></div>
+            <div>
+                <input type="email" class="input" placeholder="enter your email" />
+            </div>
+
+            <div>
+                <button type="button" class="submitbutton" onclick="submitemail()">Submit</button>
+            </div>
+        </div>
+    </div>
+</body>
