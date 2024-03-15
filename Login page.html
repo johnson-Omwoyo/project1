@@ -14,7 +14,7 @@
                 }
 
                 .form-container {
-                    margin: 8% 20%;
+                    margin: 18px auto;
                     text-align: center;
                     padding: 100;
                 }
@@ -22,7 +22,7 @@
                 .loginForm {
                     width: 320px;
                     margin: 0 auto;
-                    padding: 100px;
+                    padding: 18px;
                     border: 1px solid #ccc;
                     background: #f3f3f3;
                     border-radius: 10px;
@@ -33,15 +33,16 @@
                     font-size: 20px;
                     font-weight: 500;
                     width: 40%;
+                    text-align: left;
                 }
 
                 .inputField {
-                    width: 60%;
-                    padding: 10px;
-                    margin: 2px;
+                    width: auto;
+                    padding: 8px;
+                    margin: auto;
                     border: 1px solid #ccc;
                     border-radius: 5px;
-                    float: right;
+
 
                 }
 
@@ -53,13 +54,13 @@
 
                 .buttonGroup {
                     margin: 10px 0px;
-                    text-align: right;
+                    align-items: center;
                 }
 
                 .loginButton {
                     width: 120px;
                     padding: 10px;
-                    margin: 1px 40%;
+                    margin: 8px auto;
                     border: 1px solid #ccc;
                     border-radius: 5px;
                     background: #3fe258;
@@ -70,13 +71,12 @@
                 }
 
                 .Remembermecheckbox {
-                    width: 20;
-                    margin: 0;
+
+
                     text-align: left;
-                    display: flex;
                     background-color: #f3f3f3;
                     border: 1px solid #f3f3f3;
-
+                    font-size: large;
 
                 }
 
@@ -84,6 +84,7 @@
                     color: #3f65e2;
                     margin: auto;
                     text-align: center;
+                    font-size: large;
 
                 }
 
@@ -101,32 +102,49 @@
                     color: #3fe258;
 
                 }
+
+                .error {
+
+                    color: red
+                }
             </style>
         </head>
 
         <body class="inner">
+            <script>
+                function createAccount() {
+                    window.location.href = "Registrationform.html";
+                }
+            </script>
             <div class="form-container">
-                <form class="loginForm">
+                <form class="loginForm" onkeyup="clearerror()">
                     <h1><b>Log in</h1></b>
                     <div class="formGroup">
                         <label class="inputLabel">Email:</label>
-                        <input class="inputField" type="text" placeholder="Email">
+                        <input class="inputField" type="email" placeholder="Email" id="email">
+                    </div>
+                    <div>
+                        <p class="error" id="emailerror"></p>
                     </div>
                     <div class="formGroup">
                         <label class="inputLabel">Password:</label>
-                        <input class="inputField" type="password" placeholder="Password">
+                        <input class="inputField" type="password" placeholder="Password" id="password">
+                    </div>
+                    <div>
+                        <p class="error" id="passworderror"></p>
                     </div>
                     <div class="Remembermecheckbox">
                         <input type="checkbox">Remember me
 
                     </div>
                     <div class="buttonGroup">
-                        <button type="button" class="loginButton">Log in</button>
-                        <button type="button" class="createaccountbutton">Create account</button>
+                        <button type="button" class="loginButton" onclick="login()">Log in</button>
+
                     </div>
 
-                    <div class="links">
-                        <a href="emailcheckform.html">Forgot Password</a>
+
+                    <div class="links"><a href="#" onclick="passwordreset()">Forgot Password</a></div>
+                    <div class="links"> <a href="#" onclick="createAccount()">New here? Create Account</a>
                     </div>
 
                 </form>
@@ -134,6 +152,34 @@
         </body>
     </body>
 
-        
+    <script>
+        function login() {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var emailerror = document.getElementById('emailerror');
+            var passworderror = document.getElementById('passworderror');
+            if (email === "" || password === "") {
+                if (email === "") {
+                    emailerror.textContent = "Please enter your email";
+                }
+                else if (password === "") { passworderror.textContent = "please enter your password"; }
+            } else {
+                alert('email:' + email + ' \npassword:' + password + '\nsuccesfully logged in');
+            }
+        }
+        function clearerror() {
+            var emailerror = document.getElementById('emailerror');
+            var passworderror = document.getElementById('passworderror');
+            emailerror.textContent = "";
+            passworderror.textContent = "";
+        }
+        function passwordreset() {
+            window.location.href = "emailcheckform.html";
+        }
+        function createAccount() {
+            window.location.href = "Registrationform.html";
+        }
+
+    </script>
 
     </html>
