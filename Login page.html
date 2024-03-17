@@ -82,7 +82,7 @@
 
                 .links {
                     color: #3f65e2;
-                    margin: auto;
+                    margin: 12px auto;
                     text-align: center;
                     font-size: large;
 
@@ -104,8 +104,9 @@
                 }
 
                 .error {
-
-                    color: red
+                    margin: 0px;
+                    color: red;
+                    text-align: left;
                 }
             </style>
         </head>
@@ -117,22 +118,27 @@
                 }
             </script>
             <div class="form-container">
-                <form class="loginForm" onkeyup="clearerror()">
+                <form class="loginForm">
                     <h1><b>Log in</h1></b>
                     <div class="formGroup">
-                        <label class="inputLabel">Email:</label>
-                        <input class="inputField" type="email" placeholder="Email" id="email">
+                        <label class="inputLabel" id="emailLabel">Email:</label>
+                        <div>
+                            <input class="inputField" type="email" placeholder="Email" id="email"
+                                onkeyup="clearerror('email')">
+                            <p class="error" id="emailerror"></p>
+                        </div>
+
                     </div>
-                    <div>
-                        <p class="error" id="emailerror"></p>
-                    </div>
+
                     <div class="formGroup">
-                        <label class="inputLabel">Password:</label>
-                        <input class="inputField" type="password" placeholder="Password" id="password">
+                        <label class="inputLabel" id="passwordLabel">Password:</label>
+                        <div>
+                            <input class="inputField" type="password" placeholder="Password" id="password"
+                                onkeyup="clearerror('password')">
+                            <p class="error" id="passworderror"></p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="error" id="passworderror"></p>
-                    </div>
+
                     <div class="Remembermecheckbox">
                         <input type="checkbox">Remember me
 
@@ -143,8 +149,10 @@
                     </div>
 
 
-                    <div class="links"><a href="#" onclick="passwordreset()">Forgot Password</a></div>
-                    <div class="links"> <a href="#" onclick="createAccount()">New here? Create Account</a>
+                    <div class="links"><a href="#" onclick="passwordreset()">Forgot
+                            Password</a></div>
+                    <div class="links"> <a href="#" onclick="createAccount()">New here?
+                            Create Account</a>
                     </div>
 
                 </form>
@@ -158,21 +166,28 @@
             var password = document.getElementById('password').value;
             var emailerror = document.getElementById('emailerror');
             var passworderror = document.getElementById('passworderror');
+            var emailLabel = document.getElementById('emailLabel');
+            var passwordLabel = document.getElementById('passwordLabel');
             if (email === "" || password === "") {
                 if (email === "") {
                     emailerror.textContent = "Please enter your email";
+                    emailLabel.style.marginBottom = "18px";
                 }
-                else if (password === "") { passworderror.textContent = "please enter your password"; }
+                if (password === "") {
+                    passworderror.textContent = "please enter your password";
+                    passwordLabel.style.marginBottom = "18px";
+                }
             } else {
                 alert('email:' + email + ' \npassword:' + password + '\nsuccesfully logged in');
             }
         }
-        function clearerror() {
-            var emailerror = document.getElementById('emailerror');
-            var passworderror = document.getElementById('passworderror');
-            emailerror.textContent = "";
-            passworderror.textContent = "";
+        function clearerror(fieldName) {
+            var errorField = document.getElementById(fieldName + 'error');
+            var labelField = document.getElementById(fieldName + 'Label');
+            errorField.textContent = "";
+            labelField.style.marginBottom = "0px";
         }
+
         function passwordreset() {
             window.location.href = "emailcheckform.html";
         }

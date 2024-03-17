@@ -10,9 +10,9 @@
 
         .form-container {
             width: 420px;
-            margin: 10% auto;
+            margin: 64px auto;
             text-align: center;
-            padding: 10;
+            padding: 2px;
             background-color: #f3f3f3;
             border-radius: 8px;
             align-items: center;
@@ -29,9 +29,10 @@
             padding: 10px;
             width: 48;
 
+
         }
 
-        .inputlabel {
+        .inputLabel {
             margin: 20px;
             font-weight: 500;
             font-size: larger;
@@ -68,11 +69,15 @@
             margin: auto;
             text-align: center;
             font-size: large;
+            margin: 8px auto;
 
         }
 
-        .error {
-            color: red
+        .Error {
+            color: red;
+            margin: 0px;
+            text-align: left;
+            margin-left: 12px;
         }
     </style>
 
@@ -80,60 +85,69 @@
 
 <body class="whole">
 
-    <form class="form-container" onkeyup="clearerror()">
+    <form class="form-container">
         <h1 class="classhead">Register</h1>
         <div class="inputfield">
-            <label for="firstname" class="inputlabel">First name:</label>
-            <input type="text" class="input" placeholder="First name" id="firstname">
+            <Label for="firstName" class="inputLabel" id="firstNameLabel">First Name:</Label>
+            <div>
+                <input type="text" class="input" placeholder="First Name" id="firstName"
+                    onkeyup="clearError('firstName')">
+                <p class="Error" id="firstNameError"></p>
+            </div>
 
-        </div>
-        <div>
-            <p class="error" id="firstnameerror"></p>
-        </div>
-        <div class="inputfield">
-            <label for="lastname" class="inputlabel">Last name:</label>
-            <input type="text" class="input" placeholder="Last name" id="lastname">
-        </div>
-        <div>
-            <p class="error" id="lastnameerror"></p>
-        </div>
-        <div class="inputfield">
-            <label for="dateofbirth" class="inputlabel">Date of birth:</label>
-            <input type="date" class="input" placeholder="DOB" id="dateofbirth">
-        </div>
-
-        <div>
-            <p class="error" id="dateofbirtherror"></p>
-        </div>
-        <div class="inputfield">
-            <label for="Email" class="inputlabel">Email:</label>
-            <input type="email" class="input" placeholder="E-mail,G-mail,Yahoo,e.t.c...." id="email"
-                autocomplete="gmail.com">
-        </div>
-        <div>
-            <p class="error" id="emailerror"></p>
         </div>
 
         <div class="inputfield">
-            <label for="Password" class="inputlabel">Password:</label>
-            <input type="password" class="input" placeholder="Password" id="pass1">
+            <Label for="lastName" class="inputLabel" id="lastNameLabel">Last Name:</Label>
+            <div>
+                <input type="text" class="input" placeholder="Last Name" id="lastName" onkeyup="clearError('lastName')">
+                <p class="Error" id="lastNameError"></p>
+            </div>
         </div>
 
-        <div>
-            <p class="error" id="pass1error"></p>
-        </div>
         <div class="inputfield">
-            <label for="Confirm Password" class="inputlabel">Confirm Password:</label>
-            <input type="password" class="input" placeholder="Confirm Password" id="pass2">
+            <Label for="dateofbirth" class="inputLabel" id="dateofbirthLabel">Date of birth:</Label>
+            <div>
+                <input type="date" class="input" placeholder="DOB" id="dateofbirth" onkeyup="clearError('dateofbirth')"
+                    max="2014-01-01">
+                <p class="Error" id="dateofbirthError"></p>
+            </div>
         </div>
-        <div>
-            <p class="error" id="pass2error"></p>
+
+
+        <div class="inputfield">
+            <Label for="Email" class="inputLabel" id="emailLabel">Email:</Label>
+            <div>
+                <input type="email" class="input" placeholder="E-mail,G-mail,Yahoo,e.t.c...." id="email"
+                    onkeyup="clearError('email')">
+                <p class="Error" id="emailError"></p>
+            </div>
+
         </div>
+
+        <div class="inputfield">
+            <Label for="Password" class="inputLabel" id="pass1Label">Password:</Label>
+            <div>
+                <input type="password" class="input" placeholder="Password" id="pass1" onkeyup="clearError('pass1')">
+                <p class="Error" id="pass1Error"></p>
+            </div>
+        </div>
+
+
+        <div class="inputfield">
+            <Label for="Confirm Password" class="inputLabel" id="pass2Label">Confirm Password:</Label>
+            <div>
+                <input type="password" class="input" placeholder="Confirm Password" id="pass2"
+                    onkeyup="clearError('pass2')">
+                <p class="Error" id="pass2Error"></p>
+            </div>
+        </div>
+
         <div class="terms">
             <input type="checkbox" id="terms"> I agree with terms and conditions.
         </div>
         <div>
-            <p class="error" id="termserror"></p>
+            <p class="Error" id="termsError"></p>
         </div>
         <div>
             <button type="button" class="registerbutton" onclick="Checkreg()">Register</button>
@@ -145,35 +159,35 @@
 </body>
 <script>//used onclick on submit didnt work for me..
     function Checkreg() {
-        var firstname = document.getElementById('firstname').value;
-        var lastname = document.getElementById('lastname').value;
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
         var dateofbirth = document.getElementById('dateofbirth').value;
         var email = document.getElementById('email').value;
         var pass1 = document.getElementById('pass1').value;
         var pass2 = document.getElementById('pass2').value;
         var terms = document.getElementById('terms').value
-        //errormessage fields declaration
-        var firstnameerror = document.getElementById("firstnameerror");
-        var lastnameerror = document.getElementById("lastnameerror");
-        var dateofbirtherror = document.getElementById("dateofbirtherror");
-        var emailerror = document.getElementById("emailerror");//how can i make user to enter email format only?
-        var pass1error = document.getElementById("pass1error");
-        var pass2error = document.getElementById("pass2error");
-        var termserror = document.getElementById("termserror")
+        //Errormessage fields declaration
+        var firstNameError = document.getElementById("firstNameError");
+        var lastNameError = document.getElementById("lastNameError");
+        var dateofbirthError = document.getElementById("dateofbirthError");
+        var emailError = document.getElementById("emailError");//how can i make user to enter email format only?
+        var pass1Error = document.getElementById("pass1Error");
+        var pass2Error = document.getElementById("pass2Error");
+        var termsError = document.getElementById("termsError")
 
-        if (firstname === "" || lastname === "" || dateofbirth === "" || email === "" || pass1 === "" || pass2 === "" || terms === "") {
-            if (firstname === "") { firstnameerror.textContent = "missing field"; }
-            else if (lastname === "") { lastnameerror.textContent = "missing field"; }
-            else if (dateofbirth === "") { dateofbirtherror.textContent = "missing field"; }//could'nt avoid future date insert
-            else if (email === "") { emailerror.textContent = "missing field"; }
-            else if (pass1 === "") { pass1error.textContent = "missing field"; }
-            else if (pass2 === "") { pass2error.textContent = "missing field"; }
-            else if (terms === "") { termserror.textContent = "You have to agree with terms and conditions"; }//couldn't read from the checkbox
-            else { pass2error.textContent = "Missing field"; }
+        if (firstName === "" || lastName === "" || dateofbirth === "" || email === "" || pass1 === "" || pass2 === "" || terms === "") {
+            if (firstName === "") { firstNameError.textContent = "This field is empty"; }
+            if (lastName === "") { lastNameError.textContent = "This field is empty"; }
+            if (dateofbirth === "") { dateofbirthError.textContent = "This field is empty"; }//could'nt avoid future date insert
+            if (email === "") { emailError.textContent = "This field is empty"; }
+            if (pass1 === "") { pass1Error.textContent = "This field is empty"; }
+            if (pass2 === "") { pass2Error.textContent = "This field is empty"; }
+            if (terms === "") { termsError.textContent = "You have to agree with terms and conditions"; }//couldn't read from the checkbox
+
         } else {
-            if (pass1 != pass2) { pass1error.textContent = "passwords dont match"; }
+            if (pass1 != pass2) { pass1Error.textContent = "passwords dont match"; }
             else {
-                alert('firstname:' + firstname + '  lastname:' + lastname + '  is registerd succesfully');
+                alert('firstName:' + firstName + '  lastName:' + lastName + '  is registerd succesfully');
                 window.location.href = "Login page.html";
             }
         }
@@ -184,23 +198,10 @@
     function backtologin() {
         window.location.href = "Login page.html";
     }
-    function clearerror() {
-        var firstnameerror = document.getElementById("firstnameerror");
-        var lastnameerror = document.getElementById("lastnameerror");
-        var dateofbirtherror = document.getElementById("dateofbirtherror");
-        var emailerror = document.getElementById("emailerror");
-        var pass1error = document.getElementById("pass1error");
-        var pass2error = document.getElementById("pass2error");
-
-
-        firstnameerror.textContent = "";
-        lastnameerror.textContent = "";
-        dateofbirtherror.textContent = "";
-        emailerror.textContent = "";
-        pass1error.textContent = "";
-        pass2error.textContent = "";
-
-
+    function clearError(fieldName) {
+        ErrorField = document.getElementById(fieldName + "Error")
+        LabelField = document.getElementById(fieldName + "Label")
+        ErrorField.textContent = "";
 
     }
 </script>
