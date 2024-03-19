@@ -16,7 +16,7 @@
                 .form-container {
                     margin: 18px auto;
                     text-align: center;
-                    padding: 100;
+                    padding: 100px;
                 }
 
                 .loginForm {
@@ -168,7 +168,7 @@
             var passworderror = document.getElementById('passworderror');
             var emailLabel = document.getElementById('emailLabel');
             var passwordLabel = document.getElementById('passwordLabel');
-            if (email === "" || password === "") {
+            if ((email === "" || password === "") || (email === "" && password === "")) {
                 if (email === "") {
                     emailerror.textContent = "Please enter your email";
                     emailLabel.style.marginBottom = "18px";
@@ -178,8 +178,10 @@
                     passwordLabel.style.marginBottom = "18px";
                 }
             } else {
+                if (!validateEmail(email)) { return; }
                 alert('email:' + email + ' \npassword:' + password + '\nsuccesfully logged in');
             }
+
         }
         function clearerror(fieldName) {
             var errorField = document.getElementById(fieldName + 'error');
@@ -195,6 +197,17 @@
             window.location.href = "Registrationform.html";
         }
 
+        function validateEmail(email) {
+
+            var validRegex = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
+            var emailError = document.getElementById("emailerror");
+
+            if (!email.match(validRegex)) {
+                emailError.textContent = "Invalid email";
+                return false;
+            }
+            return true;
+        }
     </script>
 
     </html>

@@ -20,14 +20,18 @@
 
         .inputfield {
             display: flex;
+            height: 48px;
+
+
         }
 
         .input {
             border: 1px solid #ccc;
             border-radius: 5px;
-            margin: 8px;
+            margin: 8px 8px 0px 8px;
             padding: 10px;
-            width: 48;
+            width: 85%;
+
 
 
         }
@@ -108,8 +112,8 @@
         <div class="inputfield">
             <Label for="dateofbirth" class="inputLabel" id="dateofbirthLabel">Date of birth:</Label>
             <div>
-                <input type="date" class="input" placeholder="DOB" id="dateofbirth" onkeyup="clearError('dateofbirth')"
-                    max="2014-01-01">
+                <input type="date" class="input" placeholder="DOB" id="dateofbirth"
+                    onchange="clearError('dateofbirth')">
                 <p class="Error" id="dateofbirthError"></p>
             </div>
         </div>
@@ -135,7 +139,8 @@
 
 
         <div class="inputfield">
-            <Label for="Confirm Password" class="inputLabel" id="pass2Label">Confirm Password:</Label>
+            <Label for="Confirm Password" class="inputLabel" id="pass2Label">Confirm
+                Password:</Label>
             <div>
                 <input type="password" class="input" placeholder="Confirm Password" id="pass2"
                     onkeyup="clearError('pass2')">
@@ -144,11 +149,11 @@
         </div>
 
         <div class="terms">
-            <input type="checkbox" id="terms"> I agree with terms and conditions.
+            <div> <input type="checkbox" id="terms" onchange="clearError('terms')"> I agree with terms and conditions.
+                <p class="Error" id="termsError"></p>
+            </div>
         </div>
-        <div>
-            <p class="Error" id="termsError"></p>
-        </div>
+
         <div>
             <button type="button" class="registerbutton" onclick="Checkreg()">Register</button>
 
@@ -165,7 +170,7 @@
         var email = document.getElementById('email').value;
         var pass1 = document.getElementById('pass1').value;
         var pass2 = document.getElementById('pass2').value;
-        var terms = document.getElementById('terms').value
+        var terms = document.getElementById('terms').checked;
         //Errormessage fields declaration
         var firstNameError = document.getElementById("firstNameError");
         var lastNameError = document.getElementById("lastNameError");
@@ -174,20 +179,27 @@
         var pass1Error = document.getElementById("pass1Error");
         var pass2Error = document.getElementById("pass2Error");
         var termsError = document.getElementById("termsError")
-
+        firstName = firstName.trim();
+        lastName = lastName.trim();
         if (firstName === "" || lastName === "" || dateofbirth === "" || email === "" || pass1 === "" || pass2 === "" || terms === "") {
-            if (firstName === "") { firstNameError.textContent = "This field is empty"; }
-            if (lastName === "") { lastNameError.textContent = "This field is empty"; }
-            if (dateofbirth === "") { dateofbirthError.textContent = "This field is empty"; }//could'nt avoid future date insert
-            if (email === "") { emailError.textContent = "This field is empty"; }
-            if (pass1 === "") { pass1Error.textContent = "This field is empty"; }
-            if (pass2 === "") { pass2Error.textContent = "This field is empty"; }
-            if (terms === "") { termsError.textContent = "You have to agree with terms and conditions"; }//couldn't read from the checkbox
+            if (firstName === "") { firstNameError.textContent = "First name required"; }
+            if (lastName === "") { lastNameError.textContent = "Last name required"; }
+            if (dateofbirth === "") { dateofbirthError.textContent = "Insert date of birth"; }//could'nt avoid future date insert
+            if (email === "") { emailError.textContent = "Email required"; }
+            if (pass1 === "") { pass1Error.textContent = "Enter password"; }
+            if (pass2 === "") { pass2Error.textContent = "Confirm your password"; }
+            if (terms === false) { termsError.textContent = "You have to agree with terms and conditions"; }//couldn't read from the checkbox
 
         } else {
             if (pass1 != pass2) { pass1Error.textContent = "passwords dont match"; }
             else {
+                debugger;
+                if (!validateDOB(dateofbirth) || !validateEmail(email)) {
+                    return;
+                }
+
                 alert('firstName:' + firstName + '  lastName:' + lastName + '  is registerd succesfully');
+
                 window.location.href = "Login page.html";
             }
         }
@@ -203,5 +215,34 @@
         LabelField = document.getElementById(fieldName + "Label")
         ErrorField.textContent = "";
 
+    }
+    var maxDate = addYearsToDate(new Date(), -10).toISOString().split('T')[0];
+    document.getElementById("dateofbirth").setAttribute('max', maxDate);
+
+
+    function addYearsToDate(date, years) {
+        date.setFullYear(date.getFullYear() + years);
+        return date;
+    }
+    function validateDOB(formDOB) {
+
+        var maxDate = addYearsToDate(new Date(), -10);
+        var dateofbirthError = document.getElementById("dateofbirthError");
+        if (new Date(formDOB) > maxDate) {
+            dateofbirthError.textContent = "Invalid date of birth";
+            return false;
+        }
+        return true;
+    }
+    function validateEmail(email) {
+
+        var validRegex = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
+        var emailError = document.getElementById("emailError");
+
+        if (!email.match(validRegex)) {
+            emailError.textContent = "Invalid email";
+            return false;
+        }
+        return true;
     }
 </script>
