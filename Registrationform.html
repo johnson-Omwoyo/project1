@@ -23,6 +23,7 @@
 
 
 
+
         }
 
         .input {
@@ -40,7 +41,7 @@
             margin: 20px;
             font-weight: 500;
             font-size: larger;
-            width: 40%;
+            width: 35%;
             text-align: left;
         }
 
@@ -83,6 +84,14 @@
             text-align: left;
             margin-left: 12px;
         }
+
+        .ratio {
+            width: 65%;
+        }
+
+        .fontDefine {
+            font-size: 17px;
+        }
     </style>
 
 </Head>
@@ -93,7 +102,7 @@
         <h1 class="classhead">Register</h1>
         <div class="inputfield">
             <Label for="firstName" class="inputLabel" id="firstNameLabel">First Name:</Label>
-            <div>
+            <div class="ratio">
                 <input type="text" class="input" placeholder="First Name" id="firstName"
                     onkeyup="clearError('firstName')">
                 <p class="Error" id="firstNameError"></p>
@@ -103,7 +112,7 @@
 
         <div class="inputfield">
             <Label for="lastName" class="inputLabel" id="lastNameLabel">Last Name:</Label>
-            <div>
+            <div class="ratio">
                 <input type="text" class="input" placeholder="Last Name" id="lastName" onkeyup="clearError('lastName')">
                 <p class="Error" id="lastNameError"></p>
             </div>
@@ -111,7 +120,7 @@
 
         <div class="inputfield">
             <Label for="dateofbirth" class="inputLabel" id="dateofbirthLabel">Date of birth:</Label>
-            <div>
+            <div class="ratio">
                 <input type="date" class="input" placeholder="DOB" id="dateofbirth"
                     onchange="clearError('dateofbirth')">
                 <p class="Error" id="dateofbirthError"></p>
@@ -121,7 +130,7 @@
 
         <div class="inputfield">
             <Label for="Email" class="inputLabel" id="emailLabel">Email:</Label>
-            <div>
+            <div class="ratio">
                 <input type="email" class="input" placeholder="E-mail,G-mail,Yahoo,e.t.c...." id="email"
                     onkeyup="clearError('email')">
                 <p class="Error" id="emailError"></p>
@@ -131,7 +140,7 @@
 
         <div class="inputfield">
             <Label for="Password" class="inputLabel" id="pass1Label">Password:</Label>
-            <div>
+            <div class="ratio">
                 <input type="password" class="input" placeholder="Password" id="pass1" onkeyup="clearError('pass1')">
                 <p class="Error" id="pass1Error"></p>
             </div>
@@ -139,9 +148,9 @@
 
 
         <div class="inputfield">
-            <Label for="Confirm Password" class="inputLabel" id="pass2Label">Confirm
+            <Label for="Confirm Password" class="inputLabel  fontDefine" id="pass2Label">Confirm
                 Password:</Label>
-            <div>
+            <div class="ratio">
                 <input type="password" class="input" placeholder="Confirm Password" id="pass2"
                     onkeyup="clearError('pass2')">
                 <p class="Error" id="pass2Error"></p>
@@ -149,7 +158,8 @@
         </div>
 
         <div class="terms">
-            <div> <input type="checkbox" id="terms" onchange="clearError('terms')"> I agree with terms and conditions.
+            <div> <input type="checkbox" id="terms" onchange="clearError('terms',true)"> I agree with terms and
+                conditions.
                 <p class="Error" id="termsError"></p>
             </div>
         </div>
@@ -171,6 +181,13 @@
         var pass1 = document.getElementById('pass1').value;
         var pass2 = document.getElementById('pass2').value;
         var terms = document.getElementById('terms').checked;
+        var firstNameLabel = document.getElementById('firstNameLabel');
+        var lastNameLabel = document.getElementById('lastNameLabel');
+        var dateofbirthLabel = document.getElementById('dateofbirthLabel');
+        var emailLabel = document.getElementById('emailLabel');
+        var pass1Label = document.getElementById('pass1Label');
+        var pass2Label = document.getElementById('pass2Label');
+        //  var pass1Label=document.getElementById('pass1Label')
         //Errormessage fields declaration
         var firstNameError = document.getElementById("firstNameError");
         var lastNameError = document.getElementById("lastNameError");
@@ -178,22 +195,42 @@
         var emailError = document.getElementById("emailError");//how can i make user to enter email format only?
         var pass1Error = document.getElementById("pass1Error");
         var pass2Error = document.getElementById("pass2Error");
-        var termsError = document.getElementById("termsError")
+        var termsError = document.getElementById("termsError");
+        // debugger;
         firstName = firstName.trim();
         lastName = lastName.trim();
         if (firstName === "" || lastName === "" || dateofbirth === "" || email === "" || pass1 === "" || pass2 === "" || terms === "") {
-            if (firstName === "") { firstNameError.textContent = "First name required"; }
-            if (lastName === "") { lastNameError.textContent = "Last name required"; }
-            if (dateofbirth === "") { dateofbirthError.textContent = "Insert date of birth"; }//could'nt avoid future date insert
-            if (email === "") { emailError.textContent = "Email required"; }
-            if (pass1 === "") { pass1Error.textContent = "Enter password"; }
-            if (pass2 === "") { pass2Error.textContent = "Confirm your password"; }
+            if (firstName === "") {
+
+                firstNameError.textContent = "First name required";
+                firstNameLabel.style.marginBottom = "16px";
+            }
+            if (lastName === "") {
+                lastNameError.textContent = "Last name required";
+                lastNameLabel.style.marginBottom = "16px";
+            }
+            if (dateofbirth === "") {
+                dateofbirthError.textContent = "Insert date of birth";
+                dateofbirthLabel.style.marginBottom = "16px";
+            }//could'nt avoid future date insert
+            if (email === "") {
+                emailError.textContent = "Email required";
+                emailLabel.style.marginBottom = "16px";
+            }
+            if (pass1 === "") {
+                pass1Error.textContent = "Enter password";
+                pass1Label.style.marginBottom = "16px";
+            }
+            if (pass2 === "") {
+                pass2Error.textContent = "Confirm your password";
+                pass2Label.style.marginBottom = "16px";
+            }
             if (terms === false) { termsError.textContent = "You have to agree with terms and conditions"; }//couldn't read from the checkbox
 
         } else {
             if (pass1 != pass2) { pass1Error.textContent = "passwords dont match"; }
             else {
-                debugger;
+
                 if (!validateDOB(dateofbirth) || !validateEmail(email)) {
                     return;
                 }
@@ -210,10 +247,15 @@
     function backtologin() {
         window.location.href = "Login page.html";
     }
-    function clearError(fieldName) {
+    function clearError(fieldName, hasNoLabel = false) {
         ErrorField = document.getElementById(fieldName + "Error")
-        LabelField = document.getElementById(fieldName + "Label")
         ErrorField.textContent = "";
+        // debugger;
+        if (!hasNoLabel) {
+            LabelField = document.getElementById(fieldName + "Label")
+            LabelField.style.marginBottom = "0px";
+        }
+
 
     }
     var maxDate = addYearsToDate(new Date(), -10).toISOString().split('T')[0];
