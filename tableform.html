@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+
+    <style>
+        .bodyOuter {
+            background-color: rgb(213, 218, 218);
+        }
+
+        .tableContainer {
+            width: 1000px;
+
+            margin: 20px auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border-radius: 8px;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(143, 15, 15, 0.1);
+        }
+
+        .header {
+            margin: 0px;
+        }
+
+        .table {
+            width: 100%;
+            align-items: left;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .cells {
+
+            padding: 12px;
+            text-align: left;
+            background-color: rgb(213, 218, 218);
+            border-bottom: 1px solid #ddd;
+
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body class="bodyOuter">
+    <div class="tableContainer">
+        <h1 class="header">Data table</h1>
+        <form class="tableForm">
+            <table class="table">
+
+                <tr>
+                    <th class="cells">Name </th>
+                    <th class="cells">Age </th>
+                    <th class="cells">Email</th>
+                    <th class="cells">Password</th>
+
+                </tr>
+                <tr>
+                    <td class="cells"></td>
+                    <td class="cells"></td>
+                    <td class="cells"></td>
+                    <td class="cells"></td>
+
+
+                </tr>
+
+            </table>
+
+        </form>
+
+</body>
+<script>
+    var row = document.createElement('tr');
+    row.innerHTML = `
+            <td>${name}</td>
+            <td>${age}</td>
+            <td>${email}</td>
+            <td>${password}</td>
+        `;
+
+</script>

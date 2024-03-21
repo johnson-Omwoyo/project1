@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<title>Email Check Page</title>
+
+<head>
+
+    <style>
+        .page {
+            background-color: #ccc;
+            align-items: center;
+        }
+
+        .emailform {
+            width: 320px;
+            margin: 48px auto;
+            padding: 32px;
+            text-align: center;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            vertical-align: middle;
+        }
+
+        .inputfield {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .input {
+            margin: 3px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .submitbutton {
+            width: 70px;
+            padding: 10px;
+            margin: auto;
+            background: #3fe258;
+            border-radius: 5px;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            animation: forwards;
+
+        }
+
+        .error {
+            color: red
+        }
+    </style>
+
+</head>
+
+<body class="page"></body>
+
+<form class="emailform">
+    <div class="inputfield">
+        <div class="label"><label for="input">Email:</label></div>
+        <div>
+            <input type="email" class="input" placeholder="enter your email" id="email" />
+        </div>
+        <div>
+            <p class="error" id="emailerror"></p>
+        </div>
+        <div>
+            <button type="button" class="submitbutton" onclick="submitemail()">Submit</button>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    function submitemail() {
+        var email = document.getElementById("email").value;
+        var emailerror = document.getElementById("emailerror");
+
+        //i was unable to put the restrictions properly
+        if (email === "") {
+            emailerror.textcontent = "please enter your email";
+        }
+
+        //else if (!email) { emailerror.textcontent = "Invalid email"; }
+        else { window.location.href = "newpasswordform.html"; }
+    }
+
+
+</script>

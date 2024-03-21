@@ -1,0 +1,213 @@
+<DOCTYPE html>
+
+    <body class="outer">
+
+        <head>
+            <title>Login Page</title>
+            <style>
+                body.outer {
+                    background-color: rgb(213, 218, 218);
+                }
+
+                h1 {
+                    font-size: 40;
+                }
+
+                .form-container {
+                    margin: 18px auto;
+                    text-align: center;
+                    padding: 100px;
+                }
+
+                .loginForm {
+                    width: 320px;
+                    margin: 0 auto;
+                    padding: 18px;
+                    border: 1px solid #ccc;
+                    background: #f3f3f3;
+                    border-radius: 10px;
+                    vertical-align: middle;
+                }
+
+                .inputLabel {
+                    font-size: 20px;
+                    font-weight: 500;
+                    width: 40%;
+                    text-align: left;
+                }
+
+                .inputField {
+                    width: auto;
+                    padding: 8px;
+                    margin: auto;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+
+
+                }
+
+                .formGroup {
+                    margin: 10px 0px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .buttonGroup {
+                    margin: 10px 0px;
+                    align-items: center;
+                }
+
+                .loginButton {
+                    width: 120px;
+                    padding: 10px;
+                    margin: 8px auto;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    background: #3fe258;
+                    cursor: pointer;
+                    font-size: 20px;
+                    color: black;
+                    font-weight: bold;
+                }
+
+                .Remembermecheckbox {
+
+
+                    text-align: left;
+                    background-color: #f3f3f3;
+                    border: 1px solid #f3f3f3;
+                    font-size: large;
+
+                }
+
+                .links {
+                    color: #3f65e2;
+                    margin: 12px auto;
+                    text-align: center;
+                    font-size: large;
+
+                }
+
+                .createaccountbutton {
+                    width: 200px;
+                    background-color: #f3f3f3;
+                    border: 2px solid #3fe258;
+                    cursor: pointer;
+                    font-size: 20px;
+                    margin: 10px 50px;
+                    text-align: center;
+                    padding: 10px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    color: #3fe258;
+
+                }
+
+                .error {
+                    margin: 0px;
+                    color: red;
+                    text-align: left;
+                }
+            </style>
+        </head>
+
+        <body class="inner">
+            <script>
+                function createAccount() {
+                    window.location.href = "Registrationform.html";
+                }
+            </script>
+            <div class="form-container">
+                <form class="loginForm">
+                    <h1><b>Log in</h1></b>
+                    <div class="formGroup">
+                        <label class="inputLabel" id="emailLabel">Email:</label>
+                        <div>
+                            <input class="inputField" type="email" placeholder="Email" id="email"
+                                onkeyup="clearerror('email')">
+                            <p class="error" id="emailerror"></p>
+                        </div>
+
+                    </div>
+
+                    <div class="formGroup">
+                        <label class="inputLabel" id="passwordLabel">Password:</label>
+                        <div>
+                            <input class="inputField" type="password" placeholder="Password" id="password"
+                                onkeyup="clearerror('password')">
+                            <p class="error" id="passworderror"></p>
+                        </div>
+                    </div>
+
+                    <div class="Remembermecheckbox">
+                        <input type="checkbox">Remember me
+
+                    </div>
+                    <div class="buttonGroup">
+                        <button type="button" class="loginButton" onclick="login()">Log in</button>
+
+                    </div>
+
+
+                    <div class="links"><a href="#" onclick="passwordreset()">Forgot
+                            Password</a></div>
+                    <div class="links"> <a href="#" onclick="createAccount()">New here?
+                            Create Account</a>
+                    </div>
+
+                </form>
+            </div>
+        </body>
+    </body>
+
+    <script>
+        function login() {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var emailerror = document.getElementById('emailerror');
+            var passworderror = document.getElementById('passworderror');
+            var emailLabel = document.getElementById('emailLabel');
+            var passwordLabel = document.getElementById('passwordLabel');
+            if ((email === "" || password === "") || (email === "" && password === "")) {
+                if (email === "") {
+                    emailerror.textContent = "Please enter your email";
+                    emailLabel.style.marginBottom = "18px";
+                }
+                if (password === "") {
+                    passworderror.textContent = "please enter your password";
+                    passwordLabel.style.marginBottom = "18px";
+                }
+            } else {
+                if (!validateEmail(email)) { return; }
+                window.location.href = "TbL.html";
+            }
+
+        }
+        function clearerror(fieldName) {
+            var errorField = document.getElementById(fieldName + 'error');
+            var labelField = document.getElementById(fieldName + 'Label');
+            errorField.textContent = "";
+            labelField.style.marginBottom = "0px";
+        }
+
+        function passwordreset() {
+            window.location.href = "emailcheckform.html";
+        }
+        function createAccount() {
+            window.location.href = "Registrationform.html";
+        }
+
+        function validateEmail(email) {
+
+            var validRegex = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
+            var emailError = document.getElementById("emailerror");
+
+            if (!email.match(validRegex)) {
+                emailError.textContent = "Invalid email";
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    </html>

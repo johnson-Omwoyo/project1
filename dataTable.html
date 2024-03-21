@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .ali {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="ali">Data Table</h1>
+
+    <table id="table">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Status</th>
+        </tr>
+    </table>
+    <script>
+        // Your array of names
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                var names = JSON.parse(xhr.responseText);
+                // Get the table element
+                const table = document.getElementById('table');
+
+                // Iterate over the names array and create rows for each name
+                names.forEach((name, index) => {
+                    const row = document.createElement('tr');
+                    const idCell = document.createElement('td');
+                    idCell.textContent = name.id;
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = name.name;
+                    const emailCell = document.createElement('td');
+                    emailCell.textContent = name.email;
+                    const genderCell = document.createElement('td');
+                    genderCell.textContent = name.gender;
+                    const statusCell = document.createElement('td');
+                    statusCell.textContent = name.status;
+
+                    // Create other cells (e.g., Quiz Name, Scores) similarly
+
+                    row.appendChild(idCell);
+                    row.appendChild(nameCell);
+                    row.appendChild(emailCell);
+                    row.appendChild(genderCell);
+                    row.appendChild(statusCell);
+                    // Append other cells to the row
+
+                    table.appendChild(row); // Add the row to the table
+                });
+            }
+        }
+        xhr.open('get', 'https://gorest.co.in/public/v2/users', true);
+        //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();        
+    </script>
+</body>
+
+</html>
