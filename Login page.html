@@ -179,8 +179,48 @@
                 }
             } else {
                 if (!validateEmail(email)) { return; }
-                window.location.href = "TbL.html";
+                const apiUrl = 'http://localhost:3000/Login';
+
+                let loginDetails = {
+                    "email": email,
+                    "password": password
+                };
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        debugger;
+                        alert(xhr.response);
+                    }
+                }
+                xhr.open('post', apiUrl, true);
+
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(loginDetails);
+
+                /* fetch(apiUrl, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'json',
+ 
+                     },
+                     body: JSON.stringify(loginDetails),
+                 })
+                     .then(response => {
+                         debugger;
+                         if (!response.ok) {
+                             throw new Error('network response problem');
+                         }
+                         return response.json();
+                     })
+                     .catch(error => {
+                         debugger;
+ 
+                     })*/
+                //console.log(JSON.stringify(loginDetails));
+                // window.location.href = "TbL.html";
             }
+
 
         }
         function clearerror(fieldName) {
