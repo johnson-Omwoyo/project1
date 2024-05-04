@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            width: auto;
+            right: 0;
+            top: 0;
+            padding: 120px;
+
+            overflow: auto;
+            text-align: center;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 48px auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            text-align: center;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .ali {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="ali">Data Table</h1>
+
+    <table id="table">
+        <tr>
+            <th>Id</th>
+            <th>firstName</th>
+            <th>lastName</th>
+            <th>dateOfBirth</th>
+            <th>Email</th>
+            <th>termsAndCondition</th>
+        </tr>
+    </table>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+
+    </div>
+
+    <script>
+        // Your array of names
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                var names = JSON.parse(xhr.responseText);
+                // Get the table element
+                const table = document.getElementById('table');
+
+                // Iterate over the names array and create rows for each name
+                names.forEach((name, index) => {
+                    const row = document.createElement('tr');
+                    const idCell = document.createElement('td');
+                    idCell.textContent = name.ID;
+                    const firstNamecell = document.createElement('td');
+                    firstNamecell.textContent = name.firstName;
+                    const lastNamecell = document.createElement('td');
+                    lastNamecell.textContent = name.lastName;
+                    const dateOfBirthcell = document.createElement('td');
+                    dateOfBirthcell.textContent = name.dateOfBirth;
+                    const emailcell = document.createElement('td');
+                    emailcell.textContent = name.email;
+                    const termsAndConditioncell = document.createElement('td');
+                    termsAndConditioncell.textContent = name.termsAndCondition;
+
+                    // Create other cells (e.g., Quiz Name, Scores) similarly
+
+                    row.appendChild(idCell);
+                    row.appendChild(firstNamecell);
+                    row.appendChild(lastNamecell);
+                    row.appendChild(dateOfBirthcell);
+                    row.appendChild(emailcell);
+                    row.appendChild(termsAndConditioncell);
+                    // Append other cells to the row
+
+                    table.appendChild(row); // Add the row to the table
+                });
+            }
+        }
+        xhr.open('get', 'http://localhost:3000/Users', true);
+        //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();        
+    </script>
+
+    <script>
+        document.getElementById('table').addEventListener('click', function (event, data) {
+            var clickedRow = event.target.parentNode;
+            if (clickedRow.tagName === 'TR') {
+                console.log(event)
+                console.log(data)
+            }
+        });
+    </script>
+
+    <script>
+
+        //MODEL
+
+        var tab = document.getElementById("table");
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById("myModal");
+
+        var modalData = {
+            title: "Update User details ",
+            description: "Data"
+        };
+
+
+        tab.onclick = function () {
+            document.getElementById("modalTitle").innerText = modalData.title;
+            document.getElementById("modalDescription").innerText = modalData.description;
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        tab.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            modal.style.display = "block";
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -162,6 +162,8 @@
 
     <script>
         function login() {
+            /*var userEmail = localStorage.getItem("email");
+            email.textContent = userEmail;*/
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
             var emailerror = document.getElementById('emailerror');
@@ -180,13 +182,15 @@
             } else {
                 if (!validateEmail(email)) { return; }
                 const apiUrl = 'http://localhost:3000/Login';
+                //Local storage ........
+
 
                 let loginDetails = {
                     "email": email,
                     "password": password
                 };
 
-                var xhr = new XMLHttpRequest();
+                /*var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
                         debugger;
@@ -196,27 +200,30 @@
                 xhr.open('post', apiUrl, true);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(loginDetails);
+                xhr.send(loginDetails);*/
 
-                /* fetch(apiUrl, {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'json',
- 
-                     },
-                     body: JSON.stringify(loginDetails),
-                 })
-                     .then(response => {
-                         debugger;
-                         if (!response.ok) {
-                             throw new Error('network response problem');
-                         }
-                         return response.json();
-                     })
-                     .catch(error => {
-                         debugger;
- 
-                     })*/
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+
+                    },
+                    body: JSON.stringify(loginDetails),
+                })
+                    .then(response => {
+
+                        if (!response.ok) {
+                            throw new Error('network response problem');
+                        }
+                        localStorage.setItem("email", loginDetails.email)
+                        window.location.href = "users.html";
+                        return response.json();
+                    })
+                    .catch(error => {
+
+
+                    })
+
                 //console.log(JSON.stringify(loginDetails));
                 // window.location.href = "TbL.html";
             }
@@ -231,10 +238,10 @@
         }
 
         function passwordreset() {
-            window.location.href = "emailcheckform.html";
+            window.location.href = "emailcheck.html";
         }
         function createAccount() {
-            window.location.href = "Registrationform.html";
+            window.location.href = "registration.html";
         }
 
         function validateEmail(email) {

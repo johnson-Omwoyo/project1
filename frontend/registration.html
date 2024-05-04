@@ -234,10 +234,49 @@
                 if (!validateDOB(dateofbirth) || !validateEmail(email)) {
                     return;
                 }
+                const apiUrl = 'http://localhost:3000/Registration';
+                let registrationDetails = {
+                    "ID": "",
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "dateOfBirth": dateofbirth,
+                    "email": email,
+                    "password": pass1,
+                    "termsAndCondition": terms
 
-                alert('firstName:' + firstName + '  lastName:' + lastName + '  is registerd succesfully');
+                };
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
 
-                window.location.href = "Login page.html";
+                    },
+                    body: JSON.stringify(registrationDetails),
+                })
+                    .then(response => {
+
+                        if (!response.ok) {
+                            throw new Error('network response problem');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+
+
+                        alert('firstName:' + data.firstName + '  lastName:' + data.lastName + '  is registerd succesfully');
+
+                        window.location.href = "Login.html";
+
+
+
+                    })
+                    .catch(error => {
+
+
+                    })
+
+
+
             }
         }
 
@@ -245,7 +284,7 @@
 
     }
     function backtologin() {
-        window.location.href = "Login page.html";
+        window.location.href = "Login.html";
     }
     function clearError(fieldName, hasNoLabel = false) {
         ErrorField = document.getElementById(fieldName + "Error")
