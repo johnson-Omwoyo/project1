@@ -6,8 +6,8 @@ const port = 3000;
 app.use(express.static('../frontend'));
 const path = require('path');
 var mysql = require('mysql2');
-
-
+var dateFormat = require('dateformat');
+//import dateFormat, { masks } from "dateformat";
 
 const cors = require('cors')
 const corsOrigin = {
@@ -38,6 +38,8 @@ let users = [
   }
 
 ]
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
@@ -117,22 +119,33 @@ app.post('/Login', (req, res) => {
     con.query(emchecker, [email], function (err, result, fields) {
 
       if (err) throw err;
+      let u = result[0];
       if (result.length > 0) {
-        let u = result[0];
+
         // console.log(u["passCode"])
         if (user.password !== u["passCode"]) {
           res.status(401);
-          res.json({
-            message: "Incorrect email or password"
-          });
-          return
-        }
-        else if (user.password === u.passCode) {
 
-          // window.location.href = "users.html";
-          res.json({ message: "Login succesful" })
         }
-        else { res.json({ message: "Error fetching data please try again" }) }
+        res.json({
+          message: "Incorrect email or password"
+        });
+        return
+      }
+      else if (user.password === u["passCode"]) {
+        let userDetails = {
+          "email": u["email"],
+          "firstName": u["firstName"],
+          "lastName": u["lastName"]
+
+        };
+        console.log(userDetails);
+        // window.location.href = "users.html";
+        res.json({ message: "Login succesful", data: userDetails })
+      }
+
+      else {
+        res.json({ message: "Error fetching data please try again" })
 
       }
     });
@@ -145,12 +158,18 @@ app.get('/users/', (req, res) => {
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
-    con.query("SELECT ID,firstName,lastName,DATE(dateOfBirth) AS dateOfBirth,email,termsAndConditions FROM users", function (err, result, fields) {
+    con.query("SELECT ID,firstName,lastName,dateOfBirth,email,termsAndConditions FROM users", function (err, result, fields) {
       if (err) throw err;
+      for (i = 0; i < result.length; i++) {
+        result[i]["dateOfBirth"] = dateFormat(result[i]["dateOfBirth"], "yyyy-mm-dd")
+
+
+      }
       res.json(result);
 
     });
   });
+
   return;
   var email = req.query.email;
   if (email != null) {
@@ -213,40 +232,54 @@ app.get('/Registration', (req, res) => {
 });
 
 
-app.put('/users/', (req, res) => {
-
-  const { email } = req.body;
-
-  let checkEm = users.find(user => user.email === email);
-  var user = req.body;
+app.put('/users', (req, res) => {
+  let user = req.body;
+  const { firstName, lastName, dateOfBirth, email } = req.body;
 
   let validationRes = validatep(user);
   if (validationRes !== "") {
     res.json({
       'message': validationRes
     });
-    return;
-  }
-  if (!checkEm) {
 
-    res.json({
-      "message": "Invalid Details"
-    });
     return;
   }
+
 
   else {
     let index = users.findIndex(user => user.email === email);
+    con.connect(function (err) {
+      if (err) throw err;
+      console.log("Connected!");
+      s = "SELECT ID FROM users WHERE email=?"
 
-    users[index].firstName = user.firstName;
-    users[index].lastName = user.lastName;
-    users[index].email = user.email;
-    users[index].password = user.password;
+      con.query(s, [email], function (err, IDresult, fields) {
+
+        if (err) throw err;
+        if (IDresult.length === 0) {
+          return res.json({
+            message: "Invalid details"
+          });
+        }
+        let d = IDresult[0]["ID"]
+
+
+
+
+        console.log("Connected!");
+        sq = "UPDATE users SET firstName=?,lastName=?,dateOfBirth=? WHERE ID=?"
+
+        con.query(sq, [firstName, lastName, dateOfBirth, d], function (err, result, fields) {
+
+          if (err) throw err;
+          res.json(result);
+
+        });
+      });
+    });
+
 
   }
-  res.send(user);
-
-
 
 });
 function validate(user) {
