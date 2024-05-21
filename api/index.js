@@ -7,6 +7,7 @@ app.use(express.static('../frontend'));
 const path = require('path');
 var mysql = require('mysql2');
 var dateFormat = require('dateformat');
+dbConnection = require('./db_connection.js');
 //import dateFormat, { masks } from "dateformat";
 
 const cors = require('cors')
@@ -108,50 +109,48 @@ app.post('/Login', (req, res) => {
   if (user.password == null || user.password == "" || user.email == null || user.email == "") {
     res.status(401);
     res.json({
-      "message": "Incorrect username or password"
+      "message": "Incorrect username or password1"
     });
   }
 
-  con.connect(function (err) {
+
+  emchecker = "SELECT * FROM users WHERE email=?;"
+  dbConnection.query(emchecker, [email], function (err, result, fields) {
+
     if (err) throw err;
-    console.log("Connected!");
-    emchecker = "SELECT * FROM users WHERE email=?;"
-    con.query(emchecker, [email], function (err, result, fields) {
+    let u = result[0];
+    //if (result.length > 0) {
 
-      if (err) throw err;
-      let u = result[0];
-      if (result.length > 0) {
+    // console.log(u["passCode"])
+    if (user.password !== u["passCode"]) {
+      res.status(401);
 
-        // console.log(u["passCode"])
-        if (user.password !== u["passCode"]) {
-          res.status(401);
+      res.json({
+        message: "Incorrect email or password"
+      });
+      return
+    }
+    //}
+    else if (user.password === u["passCode"]) {
+      let userDetails = {
+        "email": u["email"],
+        "firstName": u["firstName"],
+        "lastName": u["lastName"]
 
-        }
-        res.json({
-          message: "Incorrect email or password"
-        });
-        return
-      }
-      else if (user.password === u["passCode"]) {
-        let userDetails = {
-          "email": u["email"],
-          "firstName": u["firstName"],
-          "lastName": u["lastName"]
+      };
+      // console.log(userDetails);
+      // window.location.href = "users.html";
+      res.json({ message: "Login succesful", data: userDetails })
+    }
 
-        };
-        console.log(userDetails);
-        // window.location.href = "users.html";
-        res.json({ message: "Login succesful", data: userDetails })
-      }
+    else {
+      res.json({ message: "Error fetching data please try again" })
 
-      else {
-        res.json({ message: "Error fetching data please try again" })
-
-      }
-    });
-
+    }
   });
-})
+
+});
+
 
 
 app.get('/users/', (req, res) => {
