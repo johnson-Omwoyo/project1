@@ -4,6 +4,11 @@
 
         <head>
             <title>Login Page</title>
+
+            <link href="css/bootstrap.min.css" rel="stylesheet">
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+
             <style>
                 body.outer {
                     background-color: rgb(213, 218, 218);
@@ -20,7 +25,7 @@
                 }
 
                 .loginForm {
-                    width: 320px;
+                    /* width: 320px; */
                     margin: 0 auto;
                     padding: 18px;
                     border: 1px solid #ccc;
@@ -117,59 +122,95 @@
                     window.location.href = "Registrationform.html";
                 }
             </script>
-            <div class="form-container">
-                <form class="loginForm">
-                    <h1><b>Log in</h1></b>
-                    <div class="formGroup">
-                        <label class="inputLabel" id="emailLabel">Email:</label>
-                        <div>
-                            <input class="inputField" type="email" placeholder="Email" id="email"
-                                onkeyup="clearerror('email')">
-                            <p class="error" id="emailerror"></p>
-                        </div>
+            <div class="container" style="margin: 10% auto">
+                <div class="=row align-items-center d-flex justify-content-center ">
+                    <div class="col">
+                        <form class="loginForm col-lg-4 col-sm-8 col-xs-9 text-center">
+                            <h1><b>Log in</h1></b>
+                            <div hidden class="alert alert-danger" style="padding:0px; margin:4px !important"
+                                id="alertWarning">
+                                <p style="font-size: large">Invalid username or password</p>
+                            </div>
 
+                            <div class="formGroup">
+                                <label class="inputLabel" id="emailLabel">Email:</label>
+                                <div>
+                                    <input class="form-control" type="email" placeholder="Email" id="email"
+                                        onkeyup="clearerror('email')">
+                                    <p class="error" id="emailerror"></p>
+                                </div>
+
+                            </div>
+
+                            <div class="formGroup">
+                                <label class="inputLabel" id="passwordLabel">Password:</label>
+                                <div>
+                                    <input class="form-control" type="password" placeholder="Password" id="password"
+                                        onkeyup="clearerror('password')">
+                                    <p class="error" id="passworderror"></p>
+                                </div>
+                            </div>
+
+                            <div class="Remembermecheckbox">
+                                <input type="checkbox">Remember me
+
+                            </div>
+                            <div class="buttonGroup">
+                                <button type="button" class="btn btn btn-success loginButton" onclick="login()"
+                                    id="loginButton" data-bs-toggle="tooltip" title="CLick to login" disabled>Log
+                                    in</button>
+
+                            </div>
+
+
+                            <div class="links"><a href="#" onclick="passwordreset()">Forgot
+                                    Password</a></div>
+                            <div class="links"> <a href="#" onclick="createAccount()">New here?
+                                    Create Account</a>
+                            </div>
+
+                        </form>
                     </div>
 
-                    <div class="formGroup">
-                        <label class="inputLabel" id="passwordLabel">Password:</label>
-                        <div>
-                            <input class="inputField" type="password" placeholder="Password" id="password"
-                                onkeyup="clearerror('password')">
-                            <p class="error" id="passworderror"></p>
-                        </div>
-                    </div>
-
-                    <div class="Remembermecheckbox">
-                        <input type="checkbox">Remember me
-
-                    </div>
-                    <div class="buttonGroup">
-                        <button type="button" class="loginButton" onclick="login()">Log in</button>
-
-                    </div>
-
-
-                    <div class="links"><a href="#" onclick="passwordreset()">Forgot
-                            Password</a></div>
-                    <div class="links"> <a href="#" onclick="createAccount()">New here?
-                            Create Account</a>
-                    </div>
-
-                </form>
+                </div>
             </div>
         </body>
-    </body>
 
+    </body>
     <script>
+
+        function checkInputs() {
+            var email = document.getElementById('email');
+
+            var password = document.getElementById('password');
+            if (email.value.trim() !== '' && password.value.trim() !== '') {
+                loginButton.disabled = false;
+            } else {
+                loginButton.disabled = true;
+            }
+        }
+
+
+
+        // Listen for changes in the input fields
+        email.addEventListener("input", checkInputs);
+        password.addEventListener("input", checkInputs);
+
+
         function login() {
-            /*var userEmail = localStorage.getItem("email");
-            email.textContent = userEmail;*/
             var email = document.getElementById('email').value;
+
             var password = document.getElementById('password').value;
             var emailerror = document.getElementById('emailerror');
             var passworderror = document.getElementById('passworderror');
             var emailLabel = document.getElementById('emailLabel');
             var passwordLabel = document.getElementById('passwordLabel');
+            var loginButton = document.getElementById('loginButton');
+            var alertWarning = document.getElementById('alertWarning');
+
+
+
+
             if ((email === "" || password === "") || (email === "" && password === "")) {
                 if (email === "") {
                     emailerror.textContent = "Please enter your email";
@@ -180,27 +221,17 @@
                     passwordLabel.style.marginBottom = "18px";
                 }
             } else {
+
                 if (!validateEmail(email)) { return; }
                 const apiUrl = 'http://localhost:3000/Login';
                 //Local storage ........
+
 
 
                 let loginDetails = {
                     "email": email,
                     "password": password
                 };
-
-                /*var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        debugger;
-                        alert(xhr.response);
-                    }
-                }
-                xhr.open('post', apiUrl, true);
-
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(loginDetails);*/
 
                 fetch(apiUrl, {
                     method: 'POST',
@@ -211,11 +242,23 @@
                     body: JSON.stringify(loginDetails),
                 })
                     .then(response => {
-
                         if (!response.ok) {
-                            throw new Error('network response problem');
+                            alertWarning.hidden = false;
+                            setTimeout(function () {
+                                alertWarning.hidden = true
+                            }, 8000)
+
+
+                            throw new Error('promise chain cancelled');
                         }
-                        localStorage.setItem("email", loginDetails.email)
+
+                        return response.json()
+
+                    })
+                    .then(names => {
+
+
+                        sessionStorage.setItem("userDetails", JSON.stringify(names.data));
                         window.location.href = "users.html";
                         return response.json();
                     })
@@ -224,13 +267,15 @@
 
                     })
 
-                //console.log(JSON.stringify(loginDetails));
-                // window.location.href = "TbL.html";
             }
 
 
         }
+
         function clearerror(fieldName) {
+
+
+            alertWarning.hidden = true;
             var errorField = document.getElementById(fieldName + 'error');
             var labelField = document.getElementById(fieldName + 'Label');
             errorField.textContent = "";
@@ -255,6 +300,7 @@
             }
             return true;
         }
+
     </script>
 
     </html>
